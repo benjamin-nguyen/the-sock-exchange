@@ -106,7 +106,7 @@ function App() {
             <Routes>
               <Route exact path="/" element={<Home data={data} handleDelete={handleDelete} />} />
               <Route path="/about" element={<About />} />
-              <Route path="/add-sock" element={<AddSock />} /> 
+              <Route path="/add-sock" element={<AddSock />} /> {/* Add this route */}
             </Routes>
 
             <Footer environment={import.meta.env.VITE_ENVIRONMENT} />
