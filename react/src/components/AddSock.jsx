@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useAuth } from '../hooks/AuthContext';
 
 const initialFormData = {
   userId: '',
@@ -21,6 +22,7 @@ const initialFormData = {
 const AddSock = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [submissionMessage, setSubmissionMessage] = useState(''); 
+  const { user } = useAuth();
 
   const clearMessageAfterDelay = (delay = 3000) => {
     setTimeout(() => {
@@ -57,6 +59,11 @@ const AddSock = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const submission = {
+        ...formData,
+        addedTimestamp: new Date().toISOString(),
+        userId: user.uid
+    };
 
     try {
       const response = await fetch(import.meta.env.VITE_SOCKS_API_URL, {
@@ -64,7 +71,7 @@ const AddSock = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submission),
       });
 
       if (!response.ok) {

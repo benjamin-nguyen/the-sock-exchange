@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Promo = ({data}) => {
+const Promotion = ({data}) => {
     return (
         <>
             <div className="card">
@@ -13,4 +13,4 @@ const Promo = ({data}) => {
     );
 };
 
-export default Promo;
+export default Promotion;

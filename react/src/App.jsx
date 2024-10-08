@@ -12,9 +12,13 @@ import Home from "./components/Home";
 import About from "./components/About";
 import Featured from "./components/Featured"
 import AddSock from './components/AddSock'; 
+import { AuthProvider } from './hooks/AuthContext';
+import RequireAuth from './hooks/RequireAuth';
+import LoginForm from './components/LoginForm';
 
 function App() {
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(1); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,7 +76,7 @@ function App() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/add-sock">
+                <Link className="nav-link" to="/login">
                   Add Sock
                 </Link>
               </li>
@@ -103,11 +107,18 @@ function App() {
             <Featured promo_data={promo_data}/>
             
             <hr />
+            <AuthProvider>
             <Routes>
-              <Route exact path="/" element={<Home data={data} handleDelete={handleDelete} />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/add-sock" element={<AddSock />} /> {/* Add this route */}
+                <Route exact path="/" element={<Home data={data} handleDelete={handleDelete} page={page} setPage={setPage} />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/add-sock" element={
+                <RequireAuth>
+                    <AddSock />
+                </RequireAuth>
+                } />
+                <Route path="/Login" element={<LoginForm />} />
             </Routes>
+            </AuthProvider>
 
             <Footer environment={import.meta.env.VITE_ENVIRONMENT} />
           </div>
